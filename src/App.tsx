@@ -1,28 +1,26 @@
+import "./App.css";
+import Header from "./components/Header";
+
 function App() {
   return (
-    <main
-      style={{
-        fontFamily: "system-ui",
-        maxWidth: "800px",
-        margin: "40px auto",
-        padding: "20px",
-      }}
-    >
-      <h1>🥬 OpenFresh</h1>
+    <main className="app">
+      <Header
+        title="🥬 OpenFresh"
+        subtitle="Gestione offline dei contenitori sottovuoto."
+      />
 
-      <p>
-        Gestione offline dei contenitori sottovuoto ZWILLING.
-      </p>
+      <div className="card">
+        <h2>Benvenuto!</h2>
 
-      <hr />
+        <p>
+          Questa sarà la nuova applicazione open source compatibile con i
+          contenitori ZWILLING Fresh & Save.
+        </p>
 
-      <h2>Versione</h2>
+        <button>📷 Scansiona QR</button>
+      </div>
 
-      <p>0.1.0-dev</p>
-
-      <button>
-        📷 Scansiona QR
-      </button>
+      <footer>Versione 0.1.0-dev</footer>
     </main>
   );
 }

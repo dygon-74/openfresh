@@ -1,38 +1,38 @@
+import { useState } from "react";
 import "./App.css";
+
 import Header from "./components/Header";
-import { parseZwillingQr } from "./utils/parseZwillingQr";
+import QrScanner from "./components/QrScanner";
 
-function App() {
-  const exampleQr =
-    "https://cwa.app.link/food-storage?tc=42BO83&s=l&cc=17F9";
-
-  const container = parseZwillingQr(exampleQr);
+export default function App() {
+  const [text, setText] = useState("");
 
   return (
     <main className="app">
       <Header
         title="🥬 OpenFresh"
-        subtitle="Gestione offline dei contenitori sottovuoto."
+        subtitle="Debug Scanner QR"
       />
 
       <div className="card">
-        <h2>Parser QR</h2>
+        <h2>Scanner QR</h2>
 
-        {container ? (
-          <>
-            <p><strong>ID:</strong> {container.id}</p>
-            <p><strong>Modello:</strong> {container.model}</p>
-            <p><strong>Tipo:</strong> {container.type}</p>
-            <p><strong>Dimensione:</strong> {container.size}</p>
-          </>
-        ) : (
-          <p>QR non valido.</p>
-        )}
+        <QrScanner onScan={setText} />
+
+        <hr style={{ margin: "20px 0" }} />
+
+        <h3>Testo letto</h3>
+
+        <pre
+          style={{
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
+            textAlign: "left",
+          }}
+        >
+          {text || "Nessun QR letto"}
+        </pre>
       </div>
-
-      <footer>Versione 0.1.0-dev</footer>
     </main>
   );
 }
-
-export default App;

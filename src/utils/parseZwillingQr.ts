@@ -1,4 +1,13 @@
-import type { Container } from "../models/Container";
+import type {
+  Container,
+  ContainerSize,
+  ContainerType,
+} from "../models/Container";
+
+const modelTypes: Record<string, ContainerType> = {
+  "42BO83": "glass",
+  "42PL24": "plastic",
+};
 
 export function parseZwillingQr(text: string): Container | null {
   try {
@@ -15,8 +24,8 @@ export function parseZwillingQr(text: string): Container | null {
     return {
       id,
       model,
-      size: size as "s" | "m" | "l",
-      type: "plastic",
+      size: size as ContainerSize,
+      type: modelTypes[model] ?? "unknown",
     };
   } catch {
     return null;

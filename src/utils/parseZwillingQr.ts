@@ -1,16 +1,5 @@
-import type {
-  Container,
-  ContainerSize,
-  ContainerType,
-} from "../models/Container";
-
-const modelTypes: Record<string, ContainerType> = {
-  "42BO83": "glass",
-  "42PL24": "plastic",
-
-  // I tuoi modelli
-  "12ML74": "glass",
-};
+import type { Container } from "../models/Container";
+import { containerModels } from "../data/containers";
 
 export function parseZwillingQr(text: string): Container | null {
   try {
@@ -21,19 +10,29 @@ export function parseZwillingQr(text: string): Container | null {
       return null;
     }
 
-    const model = url.searchParams.get("tc");
-    const size = url.searchParams.get("s");
-    const id = url.searchParams.get("cc");
+    const modelCode = url.searchParams.get("tc");
+    const uniqueId = url.searchParams.get("cc");
 
-    if (!model || !size || !id) {
+    if (!modelCode || !uniqueId) {
       return null;
     }
 
+    const model = containerModels[modelCode];
+
+    if (!model) {
+      return {
+        id: uniqueId,
+        model: modelCode,
+        type: "unknown",
+        size: "m",
+      };
+    }
+
     return {
-      id,
-      model,
-      size: size as ContainerSize,
-      type: modelTypes[model] ?? "unknown",
+      id: uniqueId,
+      model: model.code,
+      type: model.type,
+      size: model.size,
     };
   } catch {
     return null;
